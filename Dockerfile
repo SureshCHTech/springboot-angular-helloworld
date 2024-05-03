@@ -20,11 +20,11 @@ WORKDIR /app
 # Copy the Angular app source code into the container
 COPY springboot-angular-helloworld/frontend/helloworld/package*.json  ./
 RUN npm install
-COPY springboot-angular-helloworld/frontend/helloworld .
+COPY . .
 # Build the Angular app
 
 FROM node:14
 WORKDIR /build
-COPY --from=angular springboot-angular-helloworld/frontend/helloworld .
+COPY --from=angular . .
 EXPOSE 3000
 CMD ["npm", "start"]
