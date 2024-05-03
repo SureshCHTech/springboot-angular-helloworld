@@ -30,5 +30,7 @@ RUN npm run build --prod
 # Use Nginx image as base for serving Angular app
 FROM nginx:alpine
 
+RUN rm -rf  /usr/share/nginx/html/*
+
 # Copy the built Angular app into the Nginx HTML directory
-COPY --from=angular /usr/src/app/dist/frontend/helloworld /usr/share/nginx/html
+COPY --from=angular /frontend/helloworld/dist/helloworld /usr/share/nginx/html
