@@ -20,7 +20,7 @@ FROM node:14 as angular
 WORKDIR /usr/src/app
 
 # Copy the Angular app source code into the container
-COPY frontend/package.json frontend/package-lock.json ./
+COPY frontend/helloworld/package.json frontend/package-lock.json ./
 RUN npm install
 COPY frontend/helloworld/ .
 
@@ -31,4 +31,4 @@ RUN npm run build --prod
 FROM nginx:alpine
 
 # Copy the built Angular app into the Nginx HTML directory
-COPY --from=angular /usr/src/app/dist/frontend /usr/share/nginx/html
+COPY --from=angular /usr/src/app/dist/frontend/helloworld /usr/share/nginx/html
