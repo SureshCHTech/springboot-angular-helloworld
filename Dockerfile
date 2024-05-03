@@ -28,9 +28,6 @@ RUN npm install
 # Copy the entire Angular project to the container
 COPY . .
 
-# Build the Angular project
-RUN npm run build -- --prod
-
 # Expose port 5200
 EXPOSE 5200
 
