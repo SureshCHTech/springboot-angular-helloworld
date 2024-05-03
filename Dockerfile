@@ -1,5 +1,5 @@
 # Use OpenJDK 11 image as base for Spring Boot
-FROM openjdk:11-jre-slim as spring
+FROM openjdk:11-jre-slim AS spring
 
 # Set working directory inside the container for Spring Boot
 WORKDIR /app
@@ -13,18 +13,26 @@ EXPOSE 8081
 # Run the Spring Boot application
 CMD ["java", "-jar", "app.jar"]
 
-# Use Node.js image as base for Angular
-FROM node:14 as angular
-# Set working directory inside the container for Angular
-WORKDIR /app
-# Copy the Angular app source code into the container
-COPY springboot-angular-helloworld/frontend/helloworld/package*.json  ./
-RUN npm install
-COPY . .
-# Build the Angular app
+# Use the latest Node.js image as the base image
+FROM node:latest AS angular
 
-FROM node:14
-WORKDIR /build
-COPY --from=angular . .
-EXPOSE 3000
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy package.json and package-lock.json files to the container
+COPY frontend/helloworld/package*.json ./
+
+# Install the project dependencies
+RUN npm install
+
+# Copy the entire Angular project to the container
+COPY . .
+
+# Build the Angular project
+RUN npm run build -- --prod
+
+# Expose port 5200
+EXPOSE 5200
+
+# Serve the Angular application using the built-in Angular CLI server
 CMD ["npm", "start"]
