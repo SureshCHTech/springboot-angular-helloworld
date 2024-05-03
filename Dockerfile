@@ -5,7 +5,7 @@ FROM openjdk:11-jre-slim as spring
 WORKDIR /app
 
 # Copy the Spring Boot JAR file into the container
-COPY backend/target/my-spring-boot-app.jar app.jar
+COPY backend/helloworld/target/my-spring-boot-app.jar app.jar
 
 # Expose the port that the Spring Boot app runs on
 EXPOSE 8081
@@ -22,7 +22,7 @@ WORKDIR /usr/src/app
 # Copy the Angular app source code into the container
 COPY frontend/package.json frontend/package-lock.json ./
 RUN npm install
-COPY frontend/ .
+COPY frontend/helloworld/ .
 
 # Build the Angular app
 RUN npm run build --prod
