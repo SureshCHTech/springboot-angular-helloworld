@@ -22,9 +22,9 @@ COPY frontend/helloworld/package*.json  ./
 RUN npm install
 COPY frontend/helloworld .
 # Build the Angular app
-RUN npm run build --prod
+
 FROM node:14
 WORKDIR /build
-COPY --from=angular frontend/helloworld /build
+COPY --from=angular frontend/helloworld .
 EXPOSE 3000
 CMD ["npm", "start"]
